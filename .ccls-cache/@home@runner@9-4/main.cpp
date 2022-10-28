@@ -3,10 +3,11 @@
 using namespace std;
 
 void printMatrix_3col(int matrix[10][3], int N_ROWS, int N_COLUMNS);
-int CountUnhealthySensitive(int matrix[10][3], int N_ROWS, int CITY_COLUMNS);
+int CountUnhealthySensitive(int matrix[10][3], int N_ROWS, int city_col);
+int meanAirQualityIndex(int matrix[][3], int N_ROWS, int city_col);
 
 int main() {
-int CITY_COLUMNS;
+int city_col;
 const int NUM_ROWS = 10;
 const int NUM_COLUMNS = 3;
   
@@ -22,11 +23,31 @@ const int NUM_COLUMNS = 3;
   {27,19,59},
   {17,13,27}};
 
-cout << "Air qualities in Grand Junction, Fort Collins and Denver from 10/04/2020-10/13/2020" << endl;
+cout << "Air qualities in Grand Junction, Fort Collins and Denver/Boulder from 10/04/2020-10/13/2020" << endl;
   
   printMatrix_3col(AirQuality_Index, NUM_ROWS, NUM_COLUMNS);
 
-cout <<
+cout <<"During this time, the air quality was unnhealthy for sensitive groups in:"<<endl;
+
+  for (city_col =0; city_col<NUM_COLUMNS; city_col++){
+     if (city_col == 0)
+       cout << "Grand Junction: " << CountUnhealthySensitive(AirQuality_Index, NUM_ROWS, city_col) << " times." << endl;
+if (city_col == 1)
+       cout << "Fort Collins: " << CountUnhealthySensitive(AirQuality_Index, NUM_ROWS, city_col) << " times."<< endl;
+    if (city_col == 2)
+       cout << "Denver/Boulder: " << CountUnhealthySensitive(AirQuality_Index, NUM_ROWS, city_col) << " times."<< endl;
+  }
+  cout<< endl;
+  cout<<"During this time, the average air quality in: "<< endl;
+   for (city_col =0; city_col<NUM_COLUMNS; city_col++){
+     if(city_col ==0)
+      cout <<"Grand Junction was " << meanAirQualityIndex(AirQuality_Index, NUM_ROWS, city_col) << endl;
+     if(city_col ==1)
+      cout <<"Fort Collins was " << meanAirQualityIndex(AirQuality_Index, NUM_ROWS, city_col) << endl;
+     if(city_col ==2)
+      cout <<"Denver/Boulder was " << meanAirQualityIndex(AirQuality_Index, NUM_ROWS, city_col)  << endl;
+}
+return 0;
 }
 
 
@@ -42,18 +63,7 @@ void printMatrix_3col(int matrix[10][3], int N_ROWS, int N_COLUMNS)
         cout << endl;    
     }
 }
-int CountUnhealthySensitive(int matrix[][3], int NUM_ROWS, int city_col){
-int days = 0;
-int unhealthy_level = 101;
-int row;
-
-  for (row = 0; row< NUM_ROWS; row++){
-     if (matrix[row][city_col] >= bad)
-       days++;
-  }
-   return days; 
-}
-
+//function to find the mean
 int meanAirQualityIndex(int matrix[][3], int N_ROWS, int city_col)
 {
   int sum = 0;
@@ -63,4 +73,16 @@ int meanAirQualityIndex(int matrix[][3], int N_ROWS, int city_col)
     avg = sum / N_ROWS;
 
     return avg;
+}
+//function to count unhealthy days
+int CountUnhealthySensitive(int matrix[][3], int N_ROWS, int city_col){
+int days = 0;
+int unhealthy_level = 101;
+int row;
+
+  for (row = 0; row< N_ROWS; row++){
+     if (matrix[row][city_col] >= unhealthy_level)
+       days++;
+  }
+   return days; 
 }
