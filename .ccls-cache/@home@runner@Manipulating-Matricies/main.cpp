@@ -2,6 +2,7 @@
 #include <iomanip>
 using namespace std;
 void printMatrix_3col(int matrix[10][3], int N_ROWS, int N_COLUMNS);
+int CountUnhealthySensitive(int matrix[10][3], int N_ROWS, int N_COLUMNS);
 int main() {
   
 const int NUM_ROWS = 10;
@@ -32,3 +33,4 @@ void printMatrix_3col(int matrix[10][3], int N_ROWS, int N_COLUMNS)
         cout << endl;    
     }
 }
+
